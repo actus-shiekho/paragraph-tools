@@ -327,6 +327,8 @@ class Paragraph {
             });
         });
 
+        const lineWrapper = document.createElement('div');
+
         const upLHElement = document.createElement('div');
         upLHElement.classList.add('cdx-settings-button');
         upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
@@ -334,15 +336,16 @@ class Paragraph {
             const newHeight = +this.data.lineHeight + 0.2;
             this._setLineHeight(newHeight)
         })
-        wrapper.appendChild(upLHElement);
+        lineWrapper.appendChild(upLHElement);
 
         const viewElement = document.createElement('div');
         upLHElement.classList.add('cdx-settings-button');
-        upLHElement.innerHTML = `<span>${this.data.lineHeight} em</span>`;
-        wrapper.appendChild(viewElement);
+        upLHElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
+        lineWrapper.appendChild(viewElement);
 
         const downLHElement = document.createElement('div');
         downLHElement.classList.add('cdx-settings-button');
+        downLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight <= 0.2)
         downLHElement.innerHTML = `<svg class="icon icon--arrow-down" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down"></use></svg>`;
         downLHElement.addEventListener('click', () => {
             if (+this.data.lineHeight > 0.2) {
@@ -350,7 +353,9 @@ class Paragraph {
                 this._setLineHeight(newHeight)
             }
         })
-        wrapper.appendChild(downLHElement);
+        lineWrapper.appendChild(downLHElement);
+
+        wrapper.appendChild(lineWrapper);
 
         return wrapper;
     }
