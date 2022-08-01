@@ -1,6 +1,6 @@
 {
   "name": "editorjs-paragraph-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "codex editor",
     "paragraph",
@@ -12,14 +12,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaaaaaaaaaaai/paragraph-with-alignment.git"
+    "url": "git@github.com:xkennich/paragraph-tools.git"
   },
   "main": "./dist/bundle.js",
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development --watch"
   },
-  "author": "kaaaaaaaaaaai <kaiogita+npm@gmail.com>",
+  "author": "xkennich <xkennich@gmail.com>",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
@@ -31,9 +31,9 @@
     "webpack-cli": "^4.9.1"
   },
   "bugs": {
-    "url": "https://github.com/kaaaaaaaaaaai/paragraph-with-alignment/issues"
+    "url": "https://github.com/xkennich/paragraph-tools/issues"
   },
-  "homepage": "https://github.com/kaaaaaaaaaaai/paragraph-with-alignment#readme",
+  "homepage": "https://github.com/xkennich/paragraph-tools#readme",
   "directories": {
     "example": "example"
   },
