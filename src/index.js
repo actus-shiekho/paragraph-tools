@@ -48,6 +48,10 @@ class Paragraph {
         return Paragraph.ALIGNMENTS.left;
     }
 
+    static get DEFAULT_LINE_HEIGHT() {
+        return 1.6
+    }
+
     /**
      *
      * @param data
@@ -75,6 +79,7 @@ class Paragraph {
             input: this.api.styles.input,
             settingsButton: this.api.styles.settingsButton,
             settingsButtonActive: this.api.styles.settingsButtonActive,
+            settingsButtonDisabled: this.api.styles.settingsButtonDisabled,
         }
 
         this.settings = [
@@ -106,7 +111,8 @@ class Paragraph {
 
         this._data = {
             text: data.text || '',
-            alignment: data.alignment || config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT
+            alignment: data.alignment || config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT,
+            lineHeight: data.lineHeight || config.defaultLineHeight || Paragraph.DEFAULT_LINE_HEIGHT,
         };
         this._element = this.drawView();
         this.data = data;
@@ -142,6 +148,7 @@ class Paragraph {
         let div = document.createElement('DIV');
 
         div.classList.add(this._CSS.wrapper, this._CSS.block, this._CSS.alignment[this.data.alignment]);
+        div.style.lineHeight = this.data.lineHeight;
         div.contentEditable = !this.readOnly;
         div.dataset.placeholder = this.api.i18n.t(this._placeholder);
         div.innerHTML = this.data.text;
@@ -171,6 +178,7 @@ class Paragraph {
         let newData = {
             text: this.data.text += data.text,
             alignment: this.data.alignment,
+            lineHeight: this.data.lineHeight,
         };
 
         this._element.innerHTML = this.data.text;
@@ -214,7 +222,8 @@ class Paragraph {
     onPaste(event) {
         const data = {
             text: event.detail.data.innerHTML,
-            alignment: this.config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT
+            alignment: this.config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT,
+            lineHeight: this.config.defaultLineHeight || Paragraph.DEFAULT_LINE_HEIGHT,
         };
 
         this.data = data;
@@ -240,7 +249,8 @@ class Paragraph {
     set data(data) {
         this._data = {
             text: data.text || '',
-            alignment: data.alignment || this.config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT
+            alignment: data.alignment || this.config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT,
+            lineHeight: data.lineHeight || this.config.defaultLineHeight || Paragraph.DEFAULT_LINE_HEIGHT,
         }
         this._element.innerHTML = this._data.text || '';
     }
@@ -264,7 +274,8 @@ class Paragraph {
             text: {
                 br: true,
             },
-            alignment: {}
+            alignment: {},
+            lineHeight: 1.6,
         };
     }
 
@@ -316,6 +327,31 @@ class Paragraph {
             });
         });
 
+        const upLHElement = document.createElement('div');
+        upLHElement.classList.add('cdx-settings-button');
+        upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
+        upLHElement.addEventListener('click', () => {
+            const newHeight = +this.data.lineHeight + 0.2;
+            this._setLineHeight(newHeight)
+        })
+        wrapper.appendChild(upLHElement);
+
+        const viewElement = document.createElement('div');
+        upLHElement.classList.add('cdx-settings-button');
+        upLHElement.innerHTML = `<span>${this.data.lineHeight} em</span>`;
+        wrapper.appendChild(viewElement);
+
+        const downLHElement = document.createElement('div');
+        downLHElement.classList.add('cdx-settings-button');
+        downLHElement.innerHTML = `<svg class="icon icon--arrow-down" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down"></use></svg>`;
+        downLHElement.addEventListener('click', () => {
+            if (+this.data.lineHeight > 0.2) {
+                const newHeight = +this.data.lineHeight - 0.2;
+                this._setLineHeight(newHeight)
+            }
+        })
+        wrapper.appendChild(downLHElement);
+
         return wrapper;
     }
 
@@ -327,6 +363,10 @@ class Paragraph {
      */
     _toggleTune(tune) {
         this.data.alignment = tune;
+    }
+
+    _setLineHeight(height) {
+        this.data.lineHeight = height;
     }
 
     /**
