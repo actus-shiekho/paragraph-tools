@@ -303,6 +303,13 @@ class Paragraph {
 
         const lineWrapper = document.createElement('div');
 
+        // add line-height label
+        const labelLHElement = document.createElement('div');
+        labelLHElement.classList.add('tooltip-label');
+        labelLHElement.innerHTML = `<span>${this.api.i18n.t('Line Height')}</span>`;
+        lineWrapper.appendChild(labelLHElement);
+
+        // add up line-height button
         const upLHElement = document.createElement('div');
         upLHElement.classList.add('cdx-settings-button');
         upLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight === 3)
@@ -315,12 +322,14 @@ class Paragraph {
         })
         lineWrapper.appendChild(upLHElement);
 
+        // add view line-height element
         const viewElement = document.createElement('div');
         viewElement.classList.add('cdx-settings-button');
         viewElement.setAttribute('id', 'cdx-settings-lineHeight-view');
         viewElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
         lineWrapper.appendChild(viewElement);
 
+        // add down line-height button
         const downLHElement = document.createElement('div');
         downLHElement.classList.add('cdx-settings-button');
         downLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight <= 0.2)
