@@ -182,6 +182,7 @@ class Paragraph {
         };
 
         this._element.innerHTML = this.data.text;
+        this._element.style.lineHeight = this._data.lineHeight;
 
         this.data = newData;
     }
@@ -252,7 +253,9 @@ class Paragraph {
             alignment: data.alignment || this.config.defaultAlignment || Paragraph.DEFAULT_ALIGNMENT,
             lineHeight: data.lineHeight || this.config.defaultLineHeight || Paragraph.DEFAULT_LINE_HEIGHT,
         }
+
         this._element.innerHTML = this._data.text || '';
+        this._element.style.lineHeight = this._data.lineHeight;
     }
 
 
@@ -305,17 +308,14 @@ class Paragraph {
         upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
         upLHElement.addEventListener('click', () => {
             const newHeight = +this.data.lineHeight + 0.2;
-            setLineHeightView(newHeight);
             this._setLineHeight(newHeight);
         })
         lineWrapper.appendChild(upLHElement);
 
         const viewElement = document.createElement('div');
         viewElement.classList.add('cdx-settings-button');
+        viewElement.id = 'cdx-settings-lineHeight-view'
         viewElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
-        const setLineHeightView = (height) => {
-            viewElement.innerHTML= `<span>${height}</span>`;
-        }
         lineWrapper.appendChild(viewElement);
 
         const downLHElement = document.createElement('div');
@@ -325,7 +325,6 @@ class Paragraph {
         downLHElement.addEventListener('click', () => {
             if (+this.data.lineHeight > 0.2) {
                 const newHeight = +this.data.lineHeight - 0.2;
-                setLineHeightView(newHeight);
                 this._setLineHeight(newHeight);
             }
         })
@@ -374,6 +373,8 @@ class Paragraph {
     }
 
     _setLineHeight(height) {
+        const viewElement = document.getElementById('cdx-settings-lineHeight-view')
+        viewElement.innerHTML= `<span>${height}</span>`;
         this.data.lineHeight = height;
         this._element.style.lineHeight = `${height}em`;
     }
