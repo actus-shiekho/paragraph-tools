@@ -298,9 +298,38 @@ class Paragraph {
     renderSettings() {
         const wrapper = document.createElement('div');
 
+        const lineWrapper = document.createElement('div');
+
+        const upLHElement = document.createElement('div');
+        upLHElement.classList.add('cdx-settings-button');
+        upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
+        upLHElement.addEventListener('click', () => {
+            const newHeight = +this.data.lineHeight + 0.2;
+            this._setLineHeight(newHeight)
+        })
+        lineWrapper.appendChild(upLHElement);
+
+        const viewElement = document.createElement('div');
+        viewElement.classList.add('cdx-settings-button');
+        viewElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
+        lineWrapper.appendChild(viewElement);
+
+        const downLHElement = document.createElement('div');
+        downLHElement.classList.add('cdx-settings-button');
+        downLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight <= 0.2)
+        downLHElement.innerHTML = `<svg class="icon icon--arrow-down" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down"></use></svg>`;
+        downLHElement.addEventListener('click', () => {
+            if (+this.data.lineHeight > 0.2) {
+                const newHeight = +this.data.lineHeight - 0.2;
+                this._setLineHeight(newHeight)
+            }
+        })
+        lineWrapper.appendChild(downLHElement);
+
+        wrapper.appendChild(lineWrapper);
+
         this.settings.map(tune => {
             /**
-             * buttonのdomを作成して、alignのtoggleをactiveに設定する
              * @type {HTMLDivElement}
              */
             const button = document.createElement('div');
@@ -321,41 +350,10 @@ class Paragraph {
                 elements.forEach((el, i) => {
                     const {name} = this.settings[i];
                     el.classList.toggle(this.CSS.settingsButtonActive, name === this.data.alignment);
-                    //paragraphのdivにalignmentのclassをつける。
                     this._element.classList.toggle(this._CSS.alignment[name], name === this.data.alignment)
                 });
             });
         });
-
-        const lineWrapper = document.createElement('div');
-
-        const upLHElement = document.createElement('div');
-        upLHElement.classList.add('cdx-settings-button');
-        upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
-        upLHElement.addEventListener('click', () => {
-            const newHeight = +this.data.lineHeight + 0.2;
-            this._setLineHeight(newHeight)
-        })
-        lineWrapper.appendChild(upLHElement);
-
-        const viewElement = document.createElement('div');
-        upLHElement.classList.add('cdx-settings-button');
-        upLHElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
-        lineWrapper.appendChild(viewElement);
-
-        const downLHElement = document.createElement('div');
-        downLHElement.classList.add('cdx-settings-button');
-        downLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight <= 0.2)
-        downLHElement.innerHTML = `<svg class="icon icon--arrow-down" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down"></use></svg>`;
-        downLHElement.addEventListener('click', () => {
-            if (+this.data.lineHeight > 0.2) {
-                const newHeight = +this.data.lineHeight - 0.2;
-                this._setLineHeight(newHeight)
-            }
-        })
-        lineWrapper.appendChild(downLHElement);
-
-        wrapper.appendChild(lineWrapper);
 
         return wrapper;
     }
