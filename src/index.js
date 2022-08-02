@@ -344,6 +344,12 @@ class Paragraph {
 
         wrapper.appendChild(lineWrapper);
 
+        // add alignment label
+        const labelALElement = document.createElement('div');
+        labelALElement.classList.add('tooltip-label');
+        labelALElement.innerHTML = `<span>${this.api.i18n.t('Alignment')}</span>`;
+        wrapper.appendChild(labelALElement);
+
         this.settings.map(tune => {
             /**
              * @type {HTMLDivElement}

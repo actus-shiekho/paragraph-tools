@@ -1,6 +1,6 @@
 {
   "name": "editorjs-paragraph-tools",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "keywords": [
     "codex editor",
     "paragraph",
@@ -8,7 +8,7 @@
     "editor.js",
     "editorjs"
   ],
-  "description": "Paragraph Tool with alignment for Editor.js",
+  "description": "Paragraph Tools for Editor.js",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -1,20 +1,8 @@
 ![](https://badgen.net/badge/Editor.js/v2.0/blue)
 
-# Paragraph Tool with alignment for Editor.js
+# Paragraph Tools for Editor.js
 
-#### If you can help, please push the Star button :)
-
-![image](https://user-images.githubusercontent.com/2194021/113742029-29803780-973d-11eb-8a66-c599d5d08c16.png)
-
-### If you want to add an alignment to another block
-This is useful
-[editorjs-alignment-blocktune](https://github.com/kaaaaaaaaaaai/editorjs-alignment-blocktune)
-
-## versions
-| version  | Description     |
-| ------ | -------- |
-| @2.x   | support alignment left/center/right |
-| @3.x | support alignment left/center/right/justify |
+![image](https://i.ibb.co/vdBTP1r/2022-08-02-17-41-13.png)
 
 ## Installation
 
@@ -23,23 +11,19 @@ This is useful
 Get the package
 
 ```shell
-npm i --save editorjs-paragraph-with-alignment@3.x
+npm i --save editorjs-paragraph-tools
 ```
 
 Include module at your application
 
 ```javascript
-const Paragraph = require('editorjs-paragraph-with-alignment');
+const Paragraph = require('editorjs-paragraph-tools');
 ```
 
 ### Download to your project's source dir
 
 1. Upload folder `dist` from repository
 2. Add `dist/bundle.js` file to your page.
-
-### Load from CDN
-
-`https://cdn.jsdelivr.net/npm/editorjs-paragraph-with-alignment@3.0.0`
 
 ## Usage
 
@@ -76,10 +60,11 @@ The Paragraph Tool supports these configuration parameters:
 
 ## Output data
 
-| Field  | Type     | Description      |
-| ------ | -------- | ---------------- |
-| text   | `string` | paragraph's text |
-| alignment   | `string` | left/center/right/justify |
+| Field  | Type     | default | Description       |
+| ------ |----------|-----|-------------------|
+| text   | `string` |     |  paragraph's text |
+| alignment   | `string`| left | left/center/right/justify |
+| lineHeight   | `number`| 1.6 | 0.2 - 3 |
 
 
 ```json
@@ -87,7 +72,8 @@ The Paragraph Tool supports these configuration parameters:
     "type" : "paragraph",
     "data" : {
         "text" : "Check out our projects on a <a href=\"https://github.com/codex-team\">GitHub page</a>.",
-        "alignment": "left"
+        "alignment": "left",
+        "lineHeight": 1.6
     }
 }
 ```
