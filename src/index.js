@@ -148,7 +148,7 @@ class Paragraph {
         let div = document.createElement('DIV');
 
         div.classList.add(this._CSS.wrapper, this._CSS.block, this._CSS.alignment[this.data.alignment]);
-        div.style.lineHeight = this.data.lineHeight;
+        div.style.lineHeight = `${this.data.lineHeight}em`;
         div.contentEditable = !this.readOnly;
         div.dataset.placeholder = this.api.i18n.t(this._placeholder);
         div.innerHTML = this.data.text;
@@ -305,13 +305,17 @@ class Paragraph {
         upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
         upLHElement.addEventListener('click', () => {
             const newHeight = +this.data.lineHeight + 0.2;
-            this._setLineHeight(newHeight)
+            setLineHeightView(newHeight);
+            this._setLineHeight(newHeight);
         })
         lineWrapper.appendChild(upLHElement);
 
         const viewElement = document.createElement('div');
         viewElement.classList.add('cdx-settings-button');
         viewElement.innerHTML = `<span>${this.data.lineHeight}</span>`;
+        const setLineHeightView = (height) => {
+            viewElement.innerHTML= `<span>${height}</span>`;
+        }
         lineWrapper.appendChild(viewElement);
 
         const downLHElement = document.createElement('div');
@@ -321,7 +325,8 @@ class Paragraph {
         downLHElement.addEventListener('click', () => {
             if (+this.data.lineHeight > 0.2) {
                 const newHeight = +this.data.lineHeight - 0.2;
-                this._setLineHeight(newHeight)
+                setLineHeightView(newHeight);
+                this._setLineHeight(newHeight);
             }
         })
         lineWrapper.appendChild(downLHElement);
@@ -370,6 +375,7 @@ class Paragraph {
 
     _setLineHeight(height) {
         this.data.lineHeight = height;
+        this._element.style.lineHeight = `${height}em`;
     }
 
     /**
