@@ -305,10 +305,13 @@ class Paragraph {
 
         const upLHElement = document.createElement('div');
         upLHElement.classList.add('cdx-settings-button');
+        upLHElement.classList.toggle(this.CSS.settingsButtonDisabled, +this.data.lineHeight === 3)
         upLHElement.innerHTML = `<svg class="icon icon--arrow-up" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-up"></use></svg>`;
         upLHElement.addEventListener('click', () => {
-            const newHeight = ((+this.data.lineHeight * 10) + 2) / 10;
-            this._setLineHeight(newHeight);
+            if (+this.data.lineHeight !== 3) {
+                const newHeight = (parseFloat(+this.data.lineHeight + 0.2)).toFixed(2);
+                this._setLineHeight(newHeight);
+            }
         })
         lineWrapper.appendChild(upLHElement);
 
@@ -324,7 +327,7 @@ class Paragraph {
         downLHElement.innerHTML = `<svg class="icon icon--arrow-down" width="14px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down"></use></svg>`;
         downLHElement.addEventListener('click', () => {
             if (+this.data.lineHeight > 0.2) {
-                const newHeight = ((+this.data.lineHeight * 10) - 2) / 10;
+                const newHeight = (parseFloat(+this.data.lineHeight - 0.2)).toFixed(2);
                 this._setLineHeight(newHeight);
             }
         })
