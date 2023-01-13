@@ -45,7 +45,7 @@ class Paragraph {
      * @returns {string}
      */
     static get DEFAULT_ALIGNMENT() {
-        return Paragraph.ALIGNMENTS.justify;
+        return Paragraph.ALIGNMENTS.center;
     }
 
     static get DEFAULT_LINE_HEIGHT() {
